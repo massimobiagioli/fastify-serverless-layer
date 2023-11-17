@@ -1,0 +1,44 @@
+service: fastify-serverless-layer
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-south-1
+  deploymentBucket:
+    name: fastify-serverless-layer-bucket
+    serverSideEncryption: AES256
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-tscpaths
+  - serverless-layers
+  - serverless-deployment-bucket
+  - serverless-offline
+
+custom:
+  serverless-layers:
+    functions: # optional
+      - customers
+      - orders
+    dependenciesPath: ./package.json
+
+functions:
+  customers:
+    handler: apps/customers/src/handlers/app.handler
+    events:
+      - http:
+          path: /customers/
+          method: ANY
+      - http:
+          path: /customers/{any+}
+          method: ANY
+  orders:
+    handler: apps/orders/src/handlers/app.handler
+    events:
+      - http:
+          path: /orders/
+          method: ANY
+      - http:
+          path: /orders/{any+}
+          method: ANY
