@@ -3,10 +3,10 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs18.x
-  region: eu-south-1
+  runtime: nodejs20.x
+  region: eu-west-1
   deploymentBucket:
-    name: fastify-serverless-layer-bucket
+    name: fastify-serverless-layer-bucket2
     serverSideEncryption: AES256
 
 plugins:
